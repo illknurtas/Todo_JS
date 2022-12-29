@@ -16,15 +16,19 @@ function eventListener(){
 function addTodo(e){
     // trim() : erasing the space if user enter a value with a space in the beginning 
     const newTodo = todoInput.value.trim();
-    // to enter the new to do on to the list as  dynamic element
-    addTodoUI(newTodo);
-
-
-    // inputa girilen veriyi console kısmına yazdırmak için olan bir kod
-    // console.log(newTodo);
+    
+    if (newTodo === ""){
+        showAlert("danger", "Please enter a task!");
+    } else{
+        // to enter the new to do on to the list as  dynamic element
+        addTodoUI(newTodo);
+        showAlert("success", "New task added successfully!");
+    }
 
     e.preventDefault(); // form tekrardan sayfaya yönlenmesin diye bir önlem kodu
 }
+
+
 // This function is going to add the string value into the UI as list item
 function addTodoUI(newTodo){
 
@@ -49,5 +53,21 @@ function addTodoUI(newTodo){
     todoInput.value = "";
 
     console.log(listItem);
+}
 
+// to prevent adding the empty to do input into the list
+function showAlert(type, message){
+    const alert = document.createElement("div");
+    alert.className = `alert alert-${type}`;
+    alert.textContent = message;
+    
+    // to show the alert under the task input area
+    firstCardBody.appendChild(alert);
+
+    // after display the alert, to make it disappear from screen
+    // setTimeout
+    setTimeout(function(){
+        alert.remove();
+    },3000); // it will last 3 seconds
+    
 }

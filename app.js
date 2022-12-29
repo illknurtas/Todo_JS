@@ -15,6 +15,7 @@ function eventListener(){
     document.addEventListener("DOMContentLoaded",loadAllTodosToUI);
     secondCardBody.addEventListener("click",deleteTodo);
     filter.addEventListener("keyup",filterTodos);
+    clearButton.addEventListener("click",clearTodos);
 };
 function addTodo(e){
     // trim() : erasing the space if user enter a value with a space in the beginning 
@@ -135,4 +136,16 @@ function filterTodos(e){
             listItem.setAttribute("style", "display : block");
         }
     });
+}
+
+// To clear all tasks
+function clearTodos(e){
+    if (confirm("Are you sure delete all tasks?")){
+        // todoList.innerHTML = ""; //slow and not so usefull for bigger projects
+        // faster than innerHTML
+        while(todoList.firstElementChild != null){
+            todoList.removeChild(todoList.firstElementChild);
+        }
+        localStorage.removeItem("todos");
+    }
 }

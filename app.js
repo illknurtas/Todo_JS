@@ -12,6 +12,7 @@ const clearButton = document.querySelector("#clear-todos");
 eventListener();
 function eventListener(){
     form.addEventListener("submit", addTodo);
+    document.addEventListener("DOMContentLoaded",loadAllTodosToUI);
 };
 function addTodo(e){
     // trim() : erasing the space if user enter a value with a space in the beginning 
@@ -22,6 +23,7 @@ function addTodo(e){
     } else{
         // to enter the new to do on to the list as  dynamic element
         addTodoUI(newTodo);
+        addTodoStorage(newTodo);
         showAlert("success", "New task added successfully!");
     }
 
@@ -70,4 +72,33 @@ function showAlert(type, message){
         alert.remove();
     },3000); // it will last 3 seconds
     
+}
+
+// to get all to do's from storage
+function getTodoFromStorage(){
+    let todos;
+    if (localStorage.getItem('todos')=== null){
+        todos =[];
+    }
+    else{
+        todos = JSON.parse(localStorage.getItem("todos"));
+    }
+    return todos;
+}
+
+// To add the tasks into the local storage
+function addTodoStorage(newTodo){
+    let todos = getTodoFromStorage();
+    todos.push(newTodo);
+
+    localStorage.setItem("todos", JSON.stringify(todos));   
+}
+
+
+// Loading the tasks everytime, that previously stored in local storage 
+function loadAllTodosToUI(){
+    let todos = getTodoFromStorage();
+    todos.forEach(function(todo){
+        addTodoUI(todo);
+    })
 }

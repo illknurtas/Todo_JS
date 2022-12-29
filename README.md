@@ -2,8 +2,7 @@
 
 
 ## Used Technologies
-** HTML
-**JavaScript
-**Bootstrap v5
 
-
+* HTML
+* JavaScript
+* Bootstrap v5

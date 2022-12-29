@@ -14,6 +14,7 @@ function eventListener(){
     form.addEventListener("submit", addTodo);
     document.addEventListener("DOMContentLoaded",loadAllTodosToUI);
     secondCardBody.addEventListener("click",deleteTodo);
+    filter.addEventListener("keyup",filterTodos);
 };
 function addTodo(e){
     // trim() : erasing the space if user enter a value with a space in the beginning 
@@ -118,4 +119,20 @@ function deleteTodoStorage(delettodo){
             todos.splice(index,1);
         }});
     localStorage.setItem("todos",JSON.stringify(todos));
+}
+// To filter tasks
+function filterTodos(e){
+    const filterValue = e.target.value.toLowerCase();
+    const listItems = document.querySelectorAll(".list-group-item");
+
+    listItems.forEach(function(listItem){
+        const text = listItem.textContent.toLowerCase();
+        if (text.indexOf(filterValue) === -1){
+            // When it doesn't find
+            listItem.setAttribute("style","display : none !important");
+        }
+        else{
+            listItem.setAttribute("style", "display : block");
+        }
+    });
 }

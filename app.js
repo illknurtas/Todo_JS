@@ -13,6 +13,7 @@ eventListener();
 function eventListener(){
     form.addEventListener("submit", addTodo);
     document.addEventListener("DOMContentLoaded",loadAllTodosToUI);
+    secondCardBody.addEventListener("click",deleteTodo);
 };
 function addTodo(e){
     // trim() : erasing the space if user enter a value with a space in the beginning 
@@ -90,7 +91,6 @@ function getTodoFromStorage(){
 function addTodoStorage(newTodo){
     let todos = getTodoFromStorage();
     todos.push(newTodo);
-
     localStorage.setItem("todos", JSON.stringify(todos));   
 }
 
@@ -101,4 +101,21 @@ function loadAllTodosToUI(){
     todos.forEach(function(todo){
         addTodoUI(todo);
     })
+}
+
+// Deleting the tasks from form and local storage
+function deleteTodo(e){
+    if(e.target.className === "fa fa-remove"){
+        e.target.parentElement.parentElement.remove();
+        deleteTodoStorage(e.target.parentElement.parentElement.textContent);
+        showAlert("info","Task deleted successfully!");
+    }
+}
+function deleteTodoStorage(delettodo){
+    let todos = getTodoFromStorage();
+    todos.forEach(function(todo,index){
+        if (todo === delettodo) {
+            todos.splice(index,1);
+        }});
+    localStorage.setItem("todos",JSON.stringify(todos));
 }
